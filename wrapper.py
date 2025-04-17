@@ -1,7 +1,7 @@
 import ee
 from procesCollection import sentinel2_preproc, landsat_preproc
 from cloudmask import apply_cs_plus_mask, mask_landsat_with_conf, compute_cloud_cover
-from mosaic import MosaicByDate
+from mosaic import MosaicByDate, mosaic_imgcol
 from reproject import repr, res
 from histogram_matching import prep_landsat, match_histograms
 from indices import apply_indices
@@ -25,10 +25,9 @@ def run_processing(params):
     SENTINEL = apply_cs_plus_mask(SENTINEL, maskBands, maskConf)
     SENTINEL = apply_indices(SENTINEL, indices)
     SENTINEL = SENTINEL.map(compute_cloud_cover(aoi)).filter(ee.Filter.gte('cloud_cover_roi', 0.1))
-    SENTINEL = SENTINEL.filter(ee.Filter.calendarRange(4, 9, 'month'))
 
     if applyMosaic == True:
-        SENTINEL = MosaicByDate(SENTINEL)
+        SENTINEL = mosaic_imgcol(SENTINEL)
 
     if applyHistMatch == True:
         landsat_8_col = (ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')

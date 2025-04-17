@@ -11,8 +11,8 @@ def rename_bands_l9(img):
     return img.select(originalNames).rename(commonNames).set('satellite', 'L9')
 
 def rename_bands_s2(img):
-    originalNames = ['B2','B3','B4','B8','B11','B12']
-    commonNames = ['blue', 'green', 'red', 'nir', 'swir1', 'swir2']
+    originalNames = ['B2','B3','B4','B5', 'B6', 'B7', 'B8','B11','B12']
+    commonNames = ['blue', 'green', 'red','re1', 're2', 're3', 'nir', 'swir1', 'swir2']
     return img.select(originalNames).rename(commonNames).set('satellite', 'S2')
 
 def scale_bands(bands, scale=1e4, offset=0.0):
