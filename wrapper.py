@@ -38,7 +38,7 @@ def run_processing(params):
           SENTINEL = SENTINEL.select(applyHistMatchBands)
           LANDSAT = (LANDSAT
             .select(applyHistMatchBands)
-            .map(lambda img: match_histograms(img, landsat_8_col, aoi, days=30))
+            .map(lambda img: match_histograms(img, SENTINEL, aoi, days=30))
             .map(lambda i: i.set('satellite', 'L'))
           ) 
 
